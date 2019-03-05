@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BubleSort </title>
+    <script>
+
+        //get numbers from input text area and validate array on validness
+        function getNumbers(){
+            let inputArray = document.getElementById('inputNumbers').value.replace(/\n/g, '').split(',').map(item => parseInt(item));
+            let valid = true;
+
+            inputArray.forEach(function validation(num){
+                if (isNaN(num)){
+                   document.getElementById('validError').innerHTML='Error! Array contains non number element';
+                    valid=false;
+                }
+            });
+
+            if (valid){
+                return inputArray;
+            }
+            else{
+                return underfined;
+            }
+        }
+
+        function clearPreviousResults() {
+            document.getElementById('outputNumbers').value = '';
+            document.getElementById('validError').innerHTML = '';
+            document.getElementById('numberOfElements').innerText = '';
+        }
+
+        function showSortedArray(){
+            clearPreviousResults();
+            var validArr=getNumbers();
+            if(validArr){
+                var sortArr=bubleSort(validArr);
+                document.getElementById('outputNumbers').value=sortArr.join(',');
+                document.getElementById('numberOfElements').innerText=validArr.length;
+            }
+        }
+
+        //core of the buble algo
+        function bubleSort(arr){
+            for(var i = 0; i < arr.length; i++){
+                for(var n = 0; n < arr.length - 1; n++){
+                    if (arr[n] > arr[n + 1]){
+                        var a = arr[n];
+                        arr[n] = arr[n+1];
+                        arr[n+1] = a;
+                    }
+                }
+            }
+            return arr;
+        }
+
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Buble sort algo</h1>
+        <p>Input array:</p>
+        <textarea id="inputNumbers" rows="10" cols="100" placeholder="Please enter the numbers"></textarea>
+        </br>
+        <button onclick="showSortedArray()">Sort</button>
+    </div>
+    <div>
+        <p>Output array:</p>
+        <textarea id="outputNumbers" rows="10" cols="100"></textarea>
+    </div>
+    <p>Numbers of elements: <span style="color:green;" id="numberOfElements"/></p>
+    <p>Complexity O(n<sup>2</sup>)</p>
+    <p><span style="color: red;" id="validError"/></p>
+</body>
+</html>
